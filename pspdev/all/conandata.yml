@@ -1,0 +1,7 @@
+sources:
+  v20250101:
+    "Macos":
+      "x86_64":
+        url: "https://github.com/elvisdukaj/pspdev/releases/download/v20250101/pspdev-macos-x86_64-v250101.tar.gz"
+        sha256: "849da3728daf77011b825dfef6e3eb907ce49ceba9a97f9f1e3440e62ac116c4"
+      "armv8":
