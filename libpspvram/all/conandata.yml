@@ -1,0 +1,4 @@
+sources:
+  v20250101:
+    url: "https://github.com/elvisdukaj/libpspvram/archive/refs/tags/v20250101.tar.gz"
+    sha256: "e999408a0a07032d82be7c2157c7e9f7f4c7a72f7521f30896b2c82bd53dc9ce"
