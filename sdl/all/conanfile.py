@@ -172,6 +172,7 @@ class SDLConan(ConanFile):
                 self.requires("libunwind/1.8.0")
         if self.settings.os == "PSP":
             self.requires("libpspvram/v20250101")
+            self.requires("pspgl/v20250101")
 
     def validate(self):
         # SDL>=2.0.18 requires xcode 12 or higher because it uses CoreHaptics.
@@ -459,6 +460,9 @@ class SDLConan(ConanFile):
             if self.options.opengles:
                 self.cpp_info.components["libsdl2"].system_libs.extend(["GLESv1_CM", "GLESv2"])
                 self.cpp_info.components["libsdl2"].system_libs.append("OpenSLES")
+        elif self.settings.os == "PSP":
+            self.cpp_info.components["libsdl2"].requires = ["pspgl::pspgl", "libpspvram::vram"]
+            self.cpp_info.components["libsdl2"].system_libs = ["pspvram", "pspaudio", "pspvfpu", "pspdisplay", "pspgu", "pspge", "psphprm", "pspctrl", "psppower"]
 
         # SDL2main
         if self.options.sdl2main:

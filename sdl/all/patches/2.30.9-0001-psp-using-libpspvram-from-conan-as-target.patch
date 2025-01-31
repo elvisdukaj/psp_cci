@@ -1,31 +1,40 @@
-From 7c4635f72e74ef9c8e6a3325a115587bde9783a1 Mon Sep 17 00:00:00 2001
+From ca42e78a69537790b2f145baf9022622ea463494 Mon Sep 17 00:00:00 2001
 From: Elvis Dukaj <elvis.dukaj@gmail.com>
 Date: Fri, 31 Jan 2025 10:37:01 +0100
 Subject: [PATCH] psp: using libpspvram from conan as target
 
 ---
- CMakeLists.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ CMakeLists.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bfc000c29..d6af68dc6 100644
+index bfc000c29..020aca687 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2629,6 +2629,7 @@ elseif(VITA)
+@@ -2629,6 +2629,8 @@ elseif(VITA)
  #  CheckPTHREAD()
  
  elseif(PSP)
 + find_package(libpspvram REQUIRED)
++ find_package(OpenGL REQUIRED)
   file(GLOB PSP_MAIN_SOURCES ${SDL2_SOURCE_DIR}/src/main/psp/*.c)
   list(APPEND SDLMAIN_SOURCES ${PSP_MAIN_SOURCES})
  
+@@ -2681,7 +2683,6 @@ elseif(PSP)
+   endif()
+ 
+   list(APPEND EXTRA_LIBS
+-      GL
+       pspvram
+       pspaudio
+       pspvfpu
 @@ -3475,6 +3476,11 @@ if(SDL_STATIC)
    # TODO: Win32 platforms keep the same suffix .lib for import and static
    # libraries - do we need to consider this?
    target_link_libraries(SDL2-static PRIVATE ${EXTRA_LIBS} ${EXTRA_LDFLAGS} ${CMAKE_DEPENDS})
 +
 +  if (PSP)
-+    target_link_libraries(SDL2-static PRIVATE libpspvram::vram)
++    target_link_libraries(SDL2-static PRIVATE libpspvram::vram OpenGL::GL)
 +  endif()
 +
    target_include_directories(SDL2-static PUBLIC
