@@ -88,9 +88,9 @@ CMakeToolchain
 cmake_layout
 ```
 
-## CMakeLists.txt:
+## CMakeLists.txt
 
-```
+```CMake
 cmake_minimum_required(VERSION 3.16)
 
 project(square)
@@ -114,7 +114,7 @@ if(PSP)
 endif()
 ```
 
-## main.c:
+## main.c
 
 
 ```C
