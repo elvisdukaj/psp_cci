@@ -1,0 +1,19 @@
+[settings]
+os=PSP
+os.fw_version = 600
+arch=mips
+build_type=Release
+compiler=gcc
+compiler.cppstd=23
+compiler.version=14.1
+compiler.libcxx=libstdc++11
+compiler.cstd=99
+
+[tool_requires]
+ninja/1.11.1
+cmake/3.31.3
+pspdev/v20250101
+
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja 
+tools.cmake.cmake_layout:build_folder_vars=['settings.os', 'settings.arch', 'settings.compiler', 'settings.compiler.version']
