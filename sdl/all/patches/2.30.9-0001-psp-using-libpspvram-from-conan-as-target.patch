@@ -1,0 +1,36 @@
+From 7c4635f72e74ef9c8e6a3325a115587bde9783a1 Mon Sep 17 00:00:00 2001
+From: Elvis Dukaj <elvis.dukaj@gmail.com>
+Date: Fri, 31 Jan 2025 10:37:01 +0100
+Subject: [PATCH] psp: using libpspvram from conan as target
+
+---
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bfc000c29..d6af68dc6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2629,6 +2629,7 @@ elseif(VITA)
+ #  CheckPTHREAD()
+ 
+ elseif(PSP)
++ find_package(libpspvram REQUIRED)
+  file(GLOB PSP_MAIN_SOURCES ${SDL2_SOURCE_DIR}/src/main/psp/*.c)
+  list(APPEND SDLMAIN_SOURCES ${PSP_MAIN_SOURCES})
+ 
+@@ -3475,6 +3476,11 @@ if(SDL_STATIC)
+   # TODO: Win32 platforms keep the same suffix .lib for import and static
+   # libraries - do we need to consider this?
+   target_link_libraries(SDL2-static PRIVATE ${EXTRA_LIBS} ${EXTRA_LDFLAGS} ${CMAKE_DEPENDS})
++
++  if (PSP)
++    target_link_libraries(SDL2-static PRIVATE libpspvram::vram)
++  endif()
++
+   target_include_directories(SDL2-static PUBLIC
+       "$<BUILD_INTERFACE:${SDL2_BINARY_DIR}/include>"
+       "$<BUILD_INTERFACE:${SDL2_BINARY_DIR}/include/SDL2>"
+-- 
+2.47.1
+

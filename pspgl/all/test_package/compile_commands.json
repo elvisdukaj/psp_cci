@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/elvisdukaj/Projects/Wii/devkitProRepos/conan_recipes/opengx/all/test_package/build/nintendowii-ppc32be-devkitppc-r46.1/Release",
+  "command": "/Users/elvisdukaj/.conan2/p/b/devki7f37fe1b2cecb/p/devkitPPC/bin/powerpc-eabi-gcc -DGEKKO -isystem /Users/elvisdukaj/.conan2/p/b/opengdb076d23339e1/p/include -mrvl -mcpu=750 -meabi -mhard-float -ffunction-sections -fdata-sections   -mrvl -mcpu=750 -meabi -mhard-float -ffunction-sections -fdata-sections -O3 -DNDEBUG -o CMakeFiles/test_package.dir/test_package.c.obj -c /Users/elvisdukaj/Projects/Wii/devkitProRepos/conan_recipes/opengx/all/test_package/test_package.c",
+  "file": "/Users/elvisdukaj/Projects/Wii/devkitProRepos/conan_recipes/opengx/all/test_package/test_package.c",
+  "output": "CMakeFiles/test_package.dir/test_package.c.obj"
+}
+]

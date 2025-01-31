@@ -1,0 +1,72 @@
+From 4c3bbd3f654b36a417aa0397cae3c0e8439d7422 Mon Sep 17 00:00:00 2001
+From: Elvis Dukaj <elvis.dukaj@gmail.com>
+Date: Fri, 31 Jan 2025 10:58:50 +0100
+Subject: [PATCH] fix environment from conan
+
+---
+ Makefile | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 23ce41c..ec0fec7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,13 +1,7 @@
+-PSPPATH := $(shell psp-config --psp-prefix)
+-PSPSDK := $(shell psp-config --pspsdk-path)
+-ARCH = psp-
+-
+-CC = $(ARCH)gcc -std=gnu99
+-AR = $(ARCH)ar
+-RANLIB = $(ARCH)ranlib
++CC += -std=gnu99
+ RM = rm -f
+-CFLAGS = -g -Wall -Wmissing-prototypes -Os -G0 -fsingle-precision-constant -I. -I $(PSPPATH)/include -I $(PSPSDK)/include
+-LFLAGS = -g -Wall -Os -G0 -L$(PSPPATH)/lib
++CFLAGS += -g -Wall -Wmissing-prototypes -Os -G0 -fsingle-precision-constant -I.
++LFLAGS += -g -Wall -Os -G0
+ 
+ DEPDIR = .deps
+ 
+@@ -177,7 +171,7 @@ all: $(DEPDIR) $(libGL.a_OBJS) $(libGLU.a_OBJS) $(libglut.a_OBJS) libGL.a libGLU
+ 	$(RM) $@
+ 	$(AR) cru $@ $($@_OBJS)
+ 	$(RANLIB) $@
+-	@$(ARCH)nm -o -fp -g --defined-only $@ | \
++	@$(NM) -o -fp -g --defined-only $@ | \
+ 		awk '$$2~/^(gl|egl|glut|__pspgl)/ { next } \
+ 				{ if (!bad) print "Bad symbols:"; print "\t", $$1, $$2; bad++ } \
+ 			END	{ if (bad) { \
+@@ -192,7 +186,7 @@ eglGetProcAddress.o: eglGetProcAddress.c pspgl_proctable.h
+ # Extract all the public GL and EGL API symbols which are extensions (ends with PSP, ARB or EXT)
+ # Symbols must be sorted by name so that bsearch can be used to look for them.
+ pspgl_proctable.h: $(API_OBJS) Makefile
+-	$(ARCH)nm -fp -g --defined-only $(API_OBJS) | sort -k1 | \
++	$(NM) -fp -g --defined-only $(API_OBJS) | sort -k1 | \
+ 		awk '$$2=="T" && $$1 ~ /^(gl|egl)[A-Z][a-zA-Z]+(PSP|ARB|EXT)/ \
+ 			{ print "\t{ \"" $$1 "\", (void (*)())"$$1 " }," }' > $@ \
+ 			|| rm -f $@
+@@ -217,13 +211,13 @@ clean:
+ 	$(MAKE) -C test-vfpu clean
+ 
+ install: all
+-	mkdir -p $(PSPPATH)/include $(PSPPATH)/lib
+-	mkdir -p $(PSPPATH)/include/GL $(PSPPATH)/include/GLES
+-	cp GL/*.h $(PSPPATH)/include/GL
+-	cp GLES/*.h $(PSPPATH)/include/GLES
+-	cp libGL.a $(PSPPATH)/lib
+-	cp libGLU.a $(PSPPATH)/lib
+-	cp libglut.a $(PSPPATH)/lib
++	mkdir -p $(PREFIX)/include $(PREFIX)/lib
++	mkdir -p $(PREFIX)/include/GL $(PREFIX)/include/GLES
++	cp GL/*.h $(PREFIX)/include/GL
++	cp GLES/*.h $(PREFIX)/include/GLES
++	cp libGL.a $(PREFIX)/lib
++	cp libGLU.a $(PREFIX)/lib
++	cp libglut.a $(PREFIX)/lib
+ 
+ -include $(wildcard $(DEPDIR)/*.d) dummy
+ 
+-- 
+2.47.1
+
