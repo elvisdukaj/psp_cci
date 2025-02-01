@@ -1,0 +1,4 @@
+sources:
+  allegrex-v2.40.0:
+    url: "https://github.com/elvisdukaj/binutils-gdb/archive/refs/tags/allegrex-v2.40.0.tar.gz"
+    sha256: "d9efc1b3da1af36fed4c0adc52bea290e4687d471725e8f77847137af1c88e3f"
